@@ -56,7 +56,11 @@ function migrate(raw){
 }
 function load(){try{const v=localStorage.getItem(KEY);if(v)return migrate(JSON.parse(v));if(OLD_KEY){const old=localStorage.getItem(OLD_KEY);if(old){const m=migrate(JSON.parse(old));localStorage.setItem(KEY,JSON.stringify(m));return m}}const fresh=structuredClone(seed);localStorage.setItem(KEY,JSON.stringify(fresh));return fresh}catch{return structuredClone(seed)}}
 let db=load(),view='today',modal=null,selectedMonth=monthKey(),calendarMonth=monthKey(),calendarSelected=today(),todaySelected=today();
-function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function save(){
+ localStorage.setItem(KEY,JSON.stringify(db));
+ render();
+ if(window.cloudSync)window.cloudSync.scheduleSave();
+}
 function tutor(id){return db.tutors.find(x=>x.id===id)}
 function dog(id){return db.dogs.find(x=>x.id===id)}
 function activeDogs(){return db.dogs.filter(d=>d.active)}
@@ -403,4 +407,4 @@ function bind(){
  const exp=document.querySelector('[data-export]');if(exp)exp.onclick=()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='caoportamental-v2-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
  const imp=document.querySelector('#importFile');if(imp)imp.onchange=async e=>{const f=e.target.files[0];if(!f)return;try{db=migrate(JSON.parse(await f.text()));save()}catch{alert('Arquivo inválido')}};
 }
-render();
+if(window.cloudSync)window.cloudSync.start();else render();

@@ -1,0 +1,24 @@
+CÃOPORTAMENTAL V10 — SINCRONIZAÇÃO ENTRE DISPOSITIVOS
+
+1. Crie um projeto gratuito em https://supabase.com/dashboard
+2. Em SQL Editor, execute todo o conteúdo de supabase-setup.sql.
+3. Em Authentication > Providers, mantenha Email habilitado.
+4. Em Project Settings / Connect > API, copie a Project URL e a chave PUBLICÁVEL
+   (sb_publishable_... ou anon). NÃO use service_role/secret.
+5. Cole os valores no arquivo cloud-config.js.
+6. No GitHub PatasPorAi/Site, substitua os arquivos da raiz pelos da pasta V10,
+   incluindo cloud-sync.js e cloud-config.js.
+   O arquivo supabase-setup.sql e este guia NÃO precisam ser publicados.
+7. Espere o GitHub Pages atualizar, abra https://patasporai.github.io/Site/
+   e crie sua conta. Confirme o e-mail se o Supabase solicitar.
+8. No PRIMEIRO dispositivo, ao entrar, seus registros locais da V9 serão enviados
+   para sua conta na nuvem, caso ainda não exista registro remoto.
+9. Nos demais dispositivos, entre com A MESMA conta para receber os dados.
+
+ATENÇÃO
+- Faça backup da V9 (Mais > Exportar) antes de migrar.
+- Se dois dispositivos editarem ao mesmo tempo, a V10 detecta conflitos e
+  impede sobrescrita silenciosa; recarregue e revise se houver alerta.
+- Não compartilhe senhas nem chaves secretas.
+- A publicação no GitHub é pública, mas os dados são protegidos por login e RLS.
+- A sincronização depende da internet; confira o indicador de nuvem.
